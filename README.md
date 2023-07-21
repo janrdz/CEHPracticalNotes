@@ -132,6 +132,104 @@ john SMBfilename
 ```
 </details>
 
+# System Hacking
+
+<details>
+<summary>Hacking Tool</summary>
+
+## Hacking Tool
+
+* Add a brief description.
+
+```console
+# And some code
+whoami
+```
+</details>
+
+<details>
+<summary>Hacking Tool</summary>
+
+## Hacking Tool
+
+* Add a brief description.
+
+```console
+# And some code
+whoami
+```
+</details>
+
+# Android Hacking
+
+<details>
+<summary>Hacking Tool</summary>
+
+## Hacking Tool
+
+* Add a brief description.
+
+```console
+# And some code
+whoami
+```
+</details>
+
+<details>
+<summary>Hacking Tool</summary>
+
+## Hacking Tool
+
+* Add a brief description.
+
+```console
+# And some code
+whoami
+```
+</details>
+
+# Password Cracking
+
+<details>
+<summary>WPScan</summary>
+
+## WPScan
+
+```shell
+# Performs only user enumeration
+wpscan --url http://example.com/ --enumerate u
+```
+</details>
+
+<details>
+<summary>Hydra</summary>
+
+## Hydra
+
+### SSH 
+
+```shell
+hydra -l username -P passwords.txt target ssh
+```
+
+### FTP
+
+```shell
+# If the service isn't running on the default port, use -s
+hydra -l username -P passwords.txt ftp://target -s 221
+
+# Use Get COMMAND to download a file
+get file.txt .
+```
+
+### Telnet
+
+```shell
+hydra -l admin -P passwords.txt -o test.txt target telnet
+```
+
+</details>
+
 # Web Hacking
 
 <details>
@@ -347,6 +445,22 @@ snow.exe -c -p test hide.txt
 </details>
 
 <details>
+<summary>CrypTool</summary>
+
+## CrypTool
+
+* Data encryption with CrypTool.
+
+```shell
+# Encrypting file
+File > New > Enter text > Encrypt > Symmetric (Modern) > RC2 > KEY 05 -> Encrypt
+
+# Decrypting
+File > Open > Decrypt > Symmetric (Modern) > RC2 > KEY 05 > Decrypt
+```
+</details>
+
+<details>
 <summary>HashMyFile</summary>
 
 ## HashMyFile
@@ -364,7 +478,7 @@ whoami
 
 ## MD5 Calculator
 
-* Add a brief description.
+* Integrates with file explore. Right click any file and select MD5 Calculator to calculate its MD5 Hash.
 
 ```console
 # And some code
@@ -388,14 +502,10 @@ whoami
 <details>
 <summary>BCTextEncoded</summary>
 
-## Hacking Tool
+## BCTextEncoded
 
-* Add a brief description.
+* Simple GUI, enter the text and encode it using a password.
 
-```console
-# And some code
-whoami
-```
 </details>
 
 <details>
@@ -412,7 +522,7 @@ whoami
 </details>
 
 <details>
-<summary>Hacking Tool</summary>
+<summary>CryptoForge</summary>
 
 ## Hacking Tool
 
@@ -492,9 +602,23 @@ attacker_ip/share
 </details>
 
 <details>
-<summary>Hacking Tool</summary>
+<summary>SimpleHTTPServer</summary>
 
-## Hacking Tool
+## SimpleHTTPServer
+
+* Starts a simple HTTP server for file sharing
+
+```shell
+python -m SimpleHTTPServer
+```
+</details>
+
+## Extra Resources
+
+<details>
+<summary>Resources</summary>
+
+## Resources
 
 * Add a brief description.
 
@@ -503,3 +627,4 @@ attacker_ip/share
 whoami
 ```
 </details>
+
