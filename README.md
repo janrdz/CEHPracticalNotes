@@ -6,7 +6,7 @@
 
 * Perform an ARP scan across the entire network to identify live hosts.
 
-```bash
+```console
 netdiscover -i eth0
 netdiscover -r x.x.x.1/24
 ```
